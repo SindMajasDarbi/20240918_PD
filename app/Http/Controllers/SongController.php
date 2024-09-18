@@ -10,7 +10,8 @@ class SongController extends Controller
     
     public function index()
     {
-        $songs = Song::limit(2);
+        // $songs = Song::limit(2);
+        $songs = Song::all();
         return view('song.index', compact('songs'));
     }
 
@@ -39,7 +40,7 @@ class SongController extends Controller
             'genre' => $request->input('genre')
         ]);
 
-        return redirect('/song'); //--------------Šo vajadzēs samainīt!!!!!!
+        return redirect('/song')->with('success', 'Song created successfully!');
     }
 
     /**
@@ -82,8 +83,8 @@ class SongController extends Controller
         ]);
     }
 
-    return redirect('/song'); //--------------Šo vajadzēs samainīt!!!!!!
-    }
+    return redirect()->route('song.index')->with('success', 'Song updated successfully!');
+}
 
     /**
      * Remove the specified resource from storage.
@@ -94,8 +95,9 @@ class SongController extends Controller
 
         $song->delete();
 
-        return redirect('/song'); //--------------Šo vajadzēs samainīt!!!!!!
+        return redirect('/song' , $song->id);
     }
+
 }
 
 
